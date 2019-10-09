@@ -9,7 +9,8 @@ const SearchScreen = () => {
   const [results, setResults] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const searchApi = async () => {
+  const searchApi = async searchTerm => {
+    console.log('Hi there!');
     try {
       const response = await yelp.get('/search', {
         // per https://www.yelp.com/developers/documentation/v3/business_search, section Parameters,
@@ -17,8 +18,8 @@ const SearchScreen = () => {
         // adding them as /search?limit=50
         params: {
           limit: 50,
-          // term: term, // or use ES2015 syntax below
-          term: term,
+          // term: term, // or use ES2015 syntax below, before Clip 96
+          term: searchTerm,
           location: 'san jose' // hardcoded
         }
       });
@@ -26,9 +27,13 @@ const SearchScreen = () => {
       setResults(response.data.businesses);
     } catch (err) {
       console.log(err);
-      setErrorMessage('Something went wrong')
+      setErrorMessage('Something went wrong');
     }
   };
+
+  // Call searchApi when component is first rendered. BAD CODE!.
+  // infinite loop: searchApi causes change of state, which causes re-rendering, which calls searchApi('pasta');
+  // searchApi('pasta');
 
   return (
     <View>
@@ -38,7 +43,7 @@ const SearchScreen = () => {
         // onTermSubmit={() => searchApi()}
         // shorter syntax option
         onTermChange={setTerm}
-        onTermSubmit={searchApi}
+        onTermSubmit={() => searchApi(term)}
       />
       {errorMessage ? <Text>{errorMessage}</Text> : null}
       <Text>We have found {results.length} results</Text>
