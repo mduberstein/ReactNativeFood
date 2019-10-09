@@ -2,10 +2,12 @@
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import SearchScreen from './src/screens/SearchScreen';
+import ResultsShowScren from './src/screens/ResultsShowScreen';
 
 const navigator = createStackNavigator(
   {
-    Search: SearchScreen
+    Search: SearchScreen,
+    ResultsShow: ResultsShowScren
   },
   {
     initialRouteName: 'Search',
@@ -15,6 +17,7 @@ const navigator = createStackNavigator(
   }
 );
 
+// result of "npx expo-cli init food"
 // the call below creates a React Native Component and puts the content navigator creats into this component
 // this is the first component, that the App Displays
 export default createAppContainer(navigator);
