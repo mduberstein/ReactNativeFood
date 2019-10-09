@@ -7,21 +7,27 @@ const SearchScreen = () => {
   const [term, setTerm] = useState('');
   // results could have been called Restaurants or Businesses
   const [results, setResults] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const searchApi = async () => {
-    const response = await yelp.get('/search', {
-      // per https://www.yelp.com/developers/documentation/v3/business_search, section Parameters,
-      // they need to be added to a query string, and per axios docs the syntax below does just that
-      // adding them as /search?limit=50
-      params: {
-        limit: 50,
-        // term: term, // or use ES2015 syntax below
-        term: term,
-        location: 'san jose' // hardcoded
-      }
-    });
-    // STATE MANAGEMENT
-    setResults(response.data.businesses);
+    try {
+      const response = await yelp.get('/search', {
+        // per https://www.yelp.com/developers/documentation/v3/business_search, section Parameters,
+        // they need to be added to a query string, and per axios docs the syntax below does just that
+        // adding them as /search?limit=50
+        params: {
+          limit: 50,
+          // term: term, // or use ES2015 syntax below
+          term: term,
+          location: 'san jose' // hardcoded
+        }
+      });
+      // STATE MANAGEMENT
+      setResults(response.data.businesses);
+    } catch (err) {
+      console.log(err);
+      setErrorMessage('Something went wrong')
+    }
   };
 
   return (
@@ -34,7 +40,7 @@ const SearchScreen = () => {
         onTermChange={setTerm}
         onTermSubmit={searchApi}
       />
-      <Text>Search Screen</Text>
+      {errorMessage ? <Text>{errorMessage}</Text> : null}
       <Text>We have found {results.length} results</Text>
     </View>
   );
