@@ -21,7 +21,8 @@ const ResultsList = ({ title, results, navigation }) => {
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
-              onPress={() => navigation.navigate('ResultsShow')}
+            // the second argument object's properties are added to the props.navigation object passed to the target of navigation, i.e. ResultsShow and can be obtained there by calling navigation.getParam('id');
+              onPress={() => navigation.navigate('ResultsShow', {id: item.id})}
             >
               <ResultsDetail result={item} />
             </TouchableOpacity>
