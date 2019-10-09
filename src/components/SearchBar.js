@@ -27,7 +27,8 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 5,
     marginHorizontal: 15,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginBottom: 10
     // alignItems: 'center' - narrows the area for the user to tab - bad
   },
   inputStyle: {
