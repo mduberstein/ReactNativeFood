@@ -10,6 +10,12 @@ import { withNavigation } from 'react-navigation';
 import ResultsDetail from './ResultsDetail';
 
 const ResultsList = ({ title, results, navigation }) => {
+  // preventing display of ResultList Header until and unless there is some data fetched
+  // also eliminates display of empty category "Big Spender" for "fast food" search
+  if(!results.length){
+    return null;
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
