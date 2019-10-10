@@ -10,3 +10,4 @@ export default axios.create({
 
 
 // usage: yelp.get('/search');
+// yelp.get('/<id>');
